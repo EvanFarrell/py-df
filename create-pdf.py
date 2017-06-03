@@ -15,13 +15,16 @@ def write_to_pdf(packet, filename):
 	#move to the beginning of the StringIO buffer
 	packet.seek(0)
 	new_pdf = PdfFileReader(packet)
+
 	# read your existing PDF
 	existing_pdf = PdfFileReader(file(filename, "rb"))
 	output = PdfFileWriter()
+
 	# add the "watermark" (which is the new pdf) on the existing page
 	page = existing_pdf.getPage(0)
 	page.mergePage(new_pdf.getPage(0))
 	output.addPage(page)
+
 	# finally, write "output" to a real file
 	outputStream = file("destination.pdf", "wb")
 	output.write(outputStream)
